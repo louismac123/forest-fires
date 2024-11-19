@@ -4,10 +4,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def _img_a_cast(img_a, dtype, true_color=False):
-    img_a = np.maximum(img_a, 0)
+    """
+    This function checks and corrects for any errors in our image format.
+    """
+
+    # Make sure the max and min are 255 and 0 for any given value.
+    img_a = np.maximum(img_a, 0)                        
     img_a = np.minimum(img_a, 255)
+
+
+    # round any floats to integers
     img_a = np.round(img_a, 0)
     img_a = np.array(img_a + 1.0e-6, dtype=dtype)
+
+    # handles grayscale images
     if len(img_a.shape) == 2:
         if true_color:
             img_a_gs = np.zeros((img_a.shape[0], img_a.shape[1], 3),
@@ -17,12 +27,19 @@ def _img_a_cast(img_a, dtype, true_color=False):
             return img_a_gs
         else:
             return img_a
+        
+    # tests for unexpected image types by seeing if there's more than RGB channels
+    # or if the last shape has more than 3 channels.
     else:
         if len(img_a.shape) != 3 or img_a.shape[2] != 3:
             raise RuntimeError("Unexpected image type")
         return img_a
 
 def linear_filter(img_a, W, **kwargs):
+    """
+    Applies a convolution with a kernel W to the supplied image
+    """
+
     img_a = _img_a_cast(img_a, dtype=np.int64)
     W = np.fliplr(np.flipud(W))
 
@@ -38,8 +55,9 @@ def linear_filter(img_a, W, **kwargs):
 
     return _img_a_cast(img_filtered_a, dtype=np.int64)
 
+file_path = input("Enter the path to the image: ").strip()
 
-with PIL.Image.open('image_processing/river.png', 'r') as h:
+with PIL.Image.open(file_path, 'r') as h:
     img = np.array(h, dtype=np.int64)
 
 img = img[:, :, :3]
