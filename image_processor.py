@@ -55,9 +55,8 @@ def linear_filter(img_a, W, **kwargs):
 
     return _img_a_cast(img_filtered_a, dtype=np.int64)
 
-file_path = input("Enter the path to the image: ").strip()
 
-with PIL.Image.open(file_path, 'r') as h:
+with PIL.Image.open('src/river.png', 'r') as h:
     img = np.array(h, dtype=np.int64)
 
 img = img[:, :, :3]
@@ -76,7 +75,3 @@ for i in range(1):
     img_linear = linear_filter(img_linear, W_0, mode = "reflect")
 
 img_linear = np.sum(img_linear, axis=2)
-
-np.save('river.npy', img_linear)
-
-plt.imshow(img_linear)
