@@ -60,7 +60,7 @@ def imwrite(fp, img_a, **kwargs):
     img = PIL.Image.fromarray(img_a)
     img.save(fp, **kwargs)
 
-with PIL.Image.open('app/src/image.png', 'r') as h:
+with PIL.Image.open('image_processing/app/src/image.png', 'r') as h:
     img = np.array(h, dtype=np.int64)
 
 img = img[:, :, :3]
@@ -80,5 +80,5 @@ for i in range(1):
 
 img_linear = np.sum(img_linear, axis=2)
 
-np.save('app/results/processed.npy', img_linear)
-imwrite('app/results/processed.png', img_linear)
+np.save('image_processing/app/results/processed.npy', img_linear)
+imwrite('image_processing/app/results/processed.png', img_linear)

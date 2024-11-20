@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-grid = np.load('app/results/processed.npy')
+grid = np.load('image_processing/app/results/processed.npy')
 
 print(grid.shape)
 
