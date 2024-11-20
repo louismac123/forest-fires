@@ -8,4 +8,4 @@ Head over to this link [Forest Fires](https://www.google.com/maps/d/viewer?mid=1
 
 here's an example of a good candidate:
 
-![forest-fire]('src/river.png')
+![forest-fire](src/river.png)
