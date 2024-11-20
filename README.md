@@ -8,7 +8,7 @@ Head over to this link [Forest Fires](https://www.google.com/maps/d/viewer?mid=1
 
 here's an example of a good candidate:
 
-<p align="center">
+<p align="center" width="200">
   <img src="app/src/image.png" />
 </p>
 
@@ -24,6 +24,6 @@ The processing pipeline saves the processed image to `'processed.png'` and gener
 
 Running our image processing pipeline on the sample image shown above gives us the following result:
 
-<p align="center">
+<p align="center" width="200">
   <img src="app/results/processed.png" />
 </p>
