@@ -7,7 +7,7 @@ effective_radius = [
     ]
 
 def find_fire_clusters(grid):
-    grid[grid != 1] = 0.0
+    grid[grid != 1] = int(0)
 
     rows, cols = len(grid), len(grid[0])
     visited = [[False] * cols for _ in range(rows)]
