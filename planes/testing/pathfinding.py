@@ -3,9 +3,13 @@ import matplotlib.pyplot as plt
 import plane
 from clustering import find_fire_clusters
 
+from annulus import create_annulus_array
+
 grid = np.load('planes/generation/grid.npy')
 
 curr_grid = grid[30]
+
+curr_grid = create_annulus_array()
 clustered_grid = curr_grid.copy()
 
 clusters = find_fire_clusters(clustered_grid)
