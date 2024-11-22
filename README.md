@@ -9,7 +9,7 @@ Head over to this link [Forest Fires](https://www.google.com/maps/d/viewer?mid=1
 here's an example of a good candidate:
 
 <p align="center">
-  <img src="app/src/image.png"  width="400"/>
+  <img src="image_processing/app/src/image.png"  width="400"/>
 </p>
 
 The processing pipeline saves the processed image to `'processed.png'` and generates a `grid.npy` for further modelling.
@@ -25,5 +25,5 @@ The processing pipeline saves the processed image to `'processed.png'` and gener
 Running our image processing pipeline on the sample image shown above gives us the following result:
 
 <p align="center" >
-  <img src="app/results/processed.png" width=400/>
+  <img src="image_processing/app/results/processed.png" width=400/>
 </p>
