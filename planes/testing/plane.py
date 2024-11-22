@@ -6,6 +6,7 @@ class planes():
         self.x = x
         self.y = y
         self.num_extinguish = num_extinguish
+        
 
     def get_min_distance_cell_from_cluster(self, clusters: dict):
         priority_queue = sorted(clusters, key= lambda x: clusters[x]['size'], reverse=True)

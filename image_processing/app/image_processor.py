@@ -75,8 +75,8 @@ W_0 = np.array([[1,1,1],
 
 img_linear = linear_filter(img, W_0, mode = "reflect")
 
-for i in range(1):
-    img_linear = linear_filter(img_linear, W_0, mode = "reflect")
+# for i in range(1):
+#     img_linear = linear_filter(img_linear, W_0, mode = "reflect")
 
 img_linear = np.sum(img_linear, axis=2)
 
