@@ -1,5 +1,5 @@
 import numpy as np
-from clustering import find_fire_clusters, effective_radius
+from clustering import find_fire_clusters
 
 import sys
 sys.path.append('./planes/generation/')
