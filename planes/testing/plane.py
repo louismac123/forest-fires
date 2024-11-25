@@ -1,4 +1,5 @@
 import numpy as np
+from clustering import find_fire_clusters
 
 class planes():
 
@@ -7,9 +8,12 @@ class planes():
         self.y = y
         self.speed = speed
         self.num_extinguish = num_extinguish
-        
 
-    def get_min_distance_cell_from_cluster(self, clusters: dict):
+    def get_loc(self):
+        return np.array([self.x, self.y])
+
+    def get_min_distance_cell_from_cluster(self, grid):
+        clusters = find_fire_clusters(grid)
         priority_queue = sorted(clusters, key= lambda x: clusters[x]['size'], reverse=True)
         closest_cells = np.zeros(shape=(len(priority_queue), 2))
 

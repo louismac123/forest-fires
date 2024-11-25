@@ -3,28 +3,35 @@ import matplotlib.pyplot as plt
 import plane
 from clustering import find_fire_clusters
 
-from annulus import create_annulus_array
-
 # grid = np.load('planes/generation/grid.npy')
 grid = np.load('planes/testing/M_tracked.npy')
-
-curr_grid = grid[30]
-clustered_grid = curr_grid.copy()
-
-clusters = find_fire_clusters(clustered_grid)
-
-priority_queue = sorted(clusters, key= lambda x: clusters[x]['size'], reverse=True)
-
 alpha_responder = plane.planes(20, 20)
+plane_loc = []
+targets = []
+grids = []
+for i in range(10):
+    curr_grid = grid[i]
+    clustered_grid = curr_grid.copy()
+    locs = alpha_responder.get_min_distance_cell_from_cluster(clustered_grid)
+    grids.append(clustered_grid)
 
-loc = alpha_responder.get_min_distance_cell_from_cluster(clusters)
+    target = locs[0]
+    targets.append(target)
+
+    alpha_responder.move(target)
+
+    alpha_loc = alpha_responder.get_loc()
+
+    plane_loc.append(alpha_loc)
 
 
-plt.imshow(clustered_grid)
-plt.scatter(alpha_responder.y, alpha_responder.x, label='Plane', marker='s')
-for i in range(len(loc)):
-    plt.scatter(loc[i][1], loc[i][0], label=f'Cluster Priority {i+1}')
+for i in range(len(grids)):
+    plt.imshow(grids[i], alpha = 0.1, label=f'grid {i}')
+
+plt.scatter(20, 20, label='plane_init', marker='s')
+
+for idx, location in enumerate(plane_loc):
+    plt.scatter(location[1], location[0], label=f'plane_loc_{idx+1}', marker='s')
+
 plt.legend()
 plt.show()
-
-print()
