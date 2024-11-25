@@ -2,7 +2,6 @@ import numpy as np
 from clustering import find_fire_clusters
 
 class planes():
-
     def __init__(self, x: int, y: int, num_extinguish:int = 0, speed:float = 10.0):
         self.x = x
         self.y = y
@@ -25,11 +24,18 @@ class planes():
         return closest_cells
     
     def norm_target_direction(self, target:np.array):
+
         vec = np.array([target[0] - self.x,
                         target[1] - self.y])
         
         mag = ((target[0] - self.x)**2 + (target[1] - self.y)**2)**(1/2)
         dir = vec/mag
+
+        loc = self.get_loc()
+        ab = np.clip(np.dot(loc, target), -1.0, 1.0)
+        mag_a = ((target[0])**(2) + (target[1])**(2))**(1/2)
+        mag_b = ((loc[0])**(2) + (loc[1])**(2))**(1/2)
+        rot = np.arccos((ab/(mag_a*mag_b)))
 
         return mag, dir
 
