@@ -2,9 +2,10 @@ import numpy as np
 
 class planes():
 
-    def __init__(self, x: int, y: int, num_extinguish:int = 0):
+    def __init__(self, x: int, y: int, num_extinguish:int = 0, speed:float = 10.0):
         self.x = x
         self.y = y
+        self.speed = speed
         self.num_extinguish = num_extinguish
         
 
@@ -18,3 +19,20 @@ class planes():
             closest_cells[idx] = cells[np.argmin(distances)]
         
         return closest_cells
+    
+    def norm_target_direction(self, target:np.array):
+        vec = np.array([target[0] - self.x,
+                        target[1] - self.y])
+        
+        mag = ((target[0] - self.x)**2 + (target[1] - self.y)**2)**(1/2)
+        dir = vec/mag
+
+        return mag, dir
+
+    def move(self, target: np.array):
+        _, dir = self.norm_target_direction(target)
+        dx = dir[0] * self.speed
+        dy = dir[1] * self.speed
+
+        self.x = int(self.x + dx)
+        self.y = int(self.y + dy)
