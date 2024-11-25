@@ -6,8 +6,17 @@ effective_radius = [
                   (2, -1),  ( 2, 0), ( 2, 1)
     ]
 
+effective_radius = [
+                  (-2, -1), (-2, 0), (-2, 1),
+        (-1, -1), (-1, 0), (-1, 1), (-1, 2),
+        ( 0, -1),          ( 0, 1), ( 0 , 2),
+        ( 1, -1), ( 1, 0), ( 1, 1), ( 1, 2),
+                  (2, -1),  ( 2, 0), ( 2, 1)
+    ]
+
 def find_fire_clusters(grid):
-    grid[grid != 1] = int(0)
+    grid[grid != 3] = int(0)
+    grid[grid == 3] = int(1)
 
     rows, cols = len(grid), len(grid[0])
     visited = [[False] * cols for _ in range(rows)]

@@ -5,18 +5,17 @@ from clustering import find_fire_clusters
 
 from annulus import create_annulus_array
 
-grid = np.load('planes/generation/grid.npy')
+# grid = np.load('planes/generation/grid.npy')
+grid = np.load('planes/testing/M_tracked.npy')
 
 curr_grid = grid[30]
-
-curr_grid = create_annulus_array()
 clustered_grid = curr_grid.copy()
 
 clusters = find_fire_clusters(clustered_grid)
 
 priority_queue = sorted(clusters, key= lambda x: clusters[x]['size'], reverse=True)
 
-alpha_responder = plane.planes(100, 100)
+alpha_responder = plane.planes(20, 20)
 
 loc = alpha_responder.get_min_distance_cell_from_cluster(clusters)
 
