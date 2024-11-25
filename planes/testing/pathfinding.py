@@ -3,19 +3,20 @@ import matplotlib.pyplot as plt
 import plane
 from clustering import find_fire_clusters
 
-grid = np.load('planes/testing/M_tracked.npy')
+grid = np.load('planes/testing/M_tracked.npy')  # bring in our tracked grid of fire.
 
-alpha_responder = plane.planes(40, 60)
+alpha_responder = plane.planes(40, 60)          # define a plane at (40, 60).
 
-curr_grid = grid[10].copy()
-clustered_grid = curr_grid.copy()
+curr_grid = grid[10].copy()                     # create a copy of our grid.
+clustered_grid = curr_grid.copy()               # this grid will be used to cluster fires together.
 
-locs = alpha_responder.get_min_distance_cell_from_cluster(clustered_grid)
-target = locs[0]
-alpha_responder.move(target)
-alpha_responder.extinguish(curr_grid)
+locs = alpha_responder.get_min_distance_cell_from_cluster(clustered_grid)   # score each fire and return an ordered list of cells based on priority.
+target = locs[0]                                                            # focus on the first priority fire cluster.
+alpha_responder.move(target)                                                # move towards it.
+alpha_responder.extinguish(curr_grid)                                       # extinguish it if its burning.
 
-plt.imshow(grid[13])
+# Showcasing extinguishment of fire.
+plt.imshow(grid[10])
 plt.scatter(60, 40, label='plane_init')
 plt.scatter(alpha_responder.y, alpha_responder.x, label='plane_next')
 plt.legend()
