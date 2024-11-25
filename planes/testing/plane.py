@@ -1,15 +1,34 @@
 import numpy as np
-from clustering import find_fire_clusters
+from clustering import find_fire_clusters, effective_radius
+
+import sys
+sys.path.append('./planes/generation/')
+from ForestFire import get_cell, set_cell
 
 class planes():
-    def __init__(self, x: int, y: int, num_extinguish:int = 0, speed:float = 10.0):
+    def __init__(self, x: int, y: int, speed:float = 10.0):
         self.x = x
         self.y = y
         self.speed = speed
-        self.num_extinguish = num_extinguish
 
     def get_loc(self):
         return np.array([self.x, self.y])
+
+    def extinguish(self, grid):
+
+        effective_radius = [
+                  (-2, -1), (-2, 0), (-2, 1),
+        (-1, -2), (-1, -1), (-1, 0), (-1, 1), (-1, 2),
+        ( 0, -2), ( 0, -1), ( 0, 0), ( 0, 1), ( 0 , 2),
+        ( 1, -2), ( 1, -1), ( 1, 0), ( 1, 1), ( 1, 2),
+                  (2, -1),  ( 2, 0), ( 2, 1)
+                  ]
+
+        for loc in effective_radius:
+            x_loc = self.x + loc[0]
+            y_loc = self.y + loc[1]
+            if get_cell(grid, x_loc, y_loc) == 3:
+                set_cell(grid, x_loc, y_loc, 4)
 
     def get_min_distance_cell_from_cluster(self, grid):
         clusters = find_fire_clusters(grid)
