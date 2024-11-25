@@ -54,18 +54,28 @@ class planes():
         """
         Clusters fires, finds closest cell in each fire.
         """
+        # use depth-first-search to cluster fires and assign them values.
         clusters = find_fire_clusters(grid)
+
+        # sort through the fires based on size and return a list from most severe to least severe.
         priority_queue = sorted(clusters, key= lambda x: clusters[x]['size'], reverse=True)
         closest_cells = np.zeros(shape=(len(priority_queue), 2))
 
+        # loop through each fire cluster in the priority_queue
         for idx, x in enumerate(priority_queue):
-            cells = np.array(clusters[x]['cells'])
-            distances = ((self.x*np.ones(shape=cells.shape[0]) - cells[:, 0])**2 + (self.y*np.ones(shape=cells.shape[0]) - cells[:, 1])**2)**(1/2)
+            cells = np.array(clusters[x]['cells'])  # store all cells in the fire cluster as a numpy array.
+
+            # find the euclidean distance between the plane and all cells in the cluster.
+            distances = ((self.x*np.ones(shape=cells.shape[0]) - cells[:, 0])**2 \
+                         + (self.y*np.ones(shape=cells.shape[0]) - cells[:, 1])**2) ** (1/2)
+            
+            # append the cell with the smallest distance into the closest_cells list.
             closest_cells[idx] = cells[np.argmin(distances)]
         
         return closest_cells
     
     def norm_target_direction(self, target:np.array):
+        # Uses basic linear algebra to find the magnitude and direction of where the plane should go.
         vec = np.array([target[0] - self.x,
                         target[1] - self.y])
         
@@ -81,14 +91,19 @@ class planes():
         return mag, dir
 
     def helper_move(self, target: np.array):
+        # given a target, find the magnitude and direction
         _, dir = self.norm_target_direction(target)
+
+        # find x, y distance update components based on speed.
         dx = dir[0] * self.speed
         dy = dir[1] * self.speed
 
+        # force integer values since we're plotting on a grid.
         self.x = int(self.x + dx)
         self.y = int(self.y + dy)
 
     def move(self, grid):
+        # Meant purely for cleanliness of code. I.e. take in a grid and run `helper_move()` with acceptable inputs.
         locs = self.get_min_distance_cell_from_cluster(grid)
         target = locs[0]
         self.helper_move(target)

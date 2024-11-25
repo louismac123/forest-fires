@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import plane
-from clustering import find_fire_clusters
 
 grid = np.load('planes/testing/M_tracked.npy')  # bring in our tracked grid of fire.
 
@@ -13,7 +12,7 @@ clustered_grid = curr_grid.copy()               # this grid will be used to clus
 # NOTE: lines 14-16 have been combined into a larger .move() function.
 locs = alpha_responder.get_min_distance_cell_from_cluster(clustered_grid)   # score each fire and return an ordered list of cells based on priority.
 target = locs[0]                                                            # focus on the first priority fire cluster.
-alpha_responder.helper_move(target)                                                # move towards it.
+alpha_responder.helper_move(target)                                         # move towards it.
 alpha_responder.extinguish(curr_grid)                                       # extinguish it if its burning.
 
 # Showcasing extinguishment of fire.
