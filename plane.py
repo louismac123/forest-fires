@@ -1,9 +1,6 @@
 import numpy as np
 from clustering import find_fire_clusters
-
-import sys
-sys.path.append('./planes/generation/')
-from ForestFire import get_cell, set_cell
+from utils import get_cell, set_cell
 
 class planes():
     """
@@ -21,18 +18,31 @@ class planes():
         norm_target_direction                   magnitude, direction, rotation finding.
         helper_move, move                       movement of plane.
     """
-    def __init__(self, x: int, y: int, speed:float = 10.0):
+    def __init__(self, x: int, y: int, radius:int = 4, speed:float = 10.0):
         self.x = x
         self.y = y
         self.speed = speed
         self.num_extinguish = 0
-        self.effective_radius = [
-                                  (-2, -1), (-2, 0), (-2, 1),
-                        (-1, -2), (-1, -1), (-1, 0), (-1, 1), (-1, 2),
-                        ( 0, -2), ( 0, -1), ( 0, 0), ( 0, 1), ( 0 , 2),
-                        ( 1, -2), ( 1, -1), ( 1, 0), ( 1, 1), ( 1, 2),
-                                (2, -1),  ( 2, 0), ( 2, 1)
-                                 ]
+
+        def generate_effective_radius(radius=radius):
+            """
+            Generates a list of tuples representing all points within the given radius around the origin (0, 0)
+            based on Chebyshev distance.
+
+            Args:
+                radius (int): The radius around the origin.
+
+            Returns:
+                list: A list of tuples representing the points within the radius.
+            """
+            points = []
+            for x in range(-radius, radius + 1):
+                for y in range(-radius, radius + 1):
+                    if abs(x) + abs(y) <= radius:  # Manhattan distance condition
+                        points.append((x, y))
+            return points
+
+        self.effective_radius = generate_effective_radius()
 
     def get_loc(self):
         # Return the location of the plane as a numpy array.

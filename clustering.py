@@ -6,7 +6,8 @@ effective_radius = [
                   (2, -1),  ( 2, 0), ( 2, 1)
     ]
 
-def find_fire_clusters(grid):
+def find_fire_clusters(in_grid):
+    grid = in_grid.copy()
     grid[grid != 3] = int(0)
     grid[grid == 3] = int(1)
     
